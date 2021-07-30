@@ -66,6 +66,9 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
+          body: |
+            Changes in this release
+            - ${{github.ref}}
           prerelease: false
 
       - name: Save name of our Artifact
