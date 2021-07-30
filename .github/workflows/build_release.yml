@@ -26,6 +26,9 @@ jobs:
       - name: Make gradle executable
         run: chmod +x ./gradlew
 
+      - name: Run Kotlin Linter
+      run: ./gradlew check
+
       # Build all our Build Types at once
       - name: Build all artifacts
         id: BuildAllAPKs
@@ -36,9 +39,6 @@ jobs:
           dependencies-cache-enable: true
           configuration-cache-enable: true
           arguments: assembleRelease
-
-      - name: Run Kotlin Linter
-        run: ./gradlew check
 
       # Sign our artifacts
       - name: Sign artifacts
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v2.2.0
         with:
           name: Release artifact
-          path: app/release/*.apk
+          path: app/release/*_${{ github.ref }}.apk
 
       - name: Create Release
         id: create_release
