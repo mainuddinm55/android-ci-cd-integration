@@ -14,4 +14,8 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: ")
         Toast.makeText(this, "Showing message", Toast.LENGTH_SHORT).show()
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
 }
