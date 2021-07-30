@@ -3,10 +3,9 @@ name: Release Build
 
 on:
 # When it will be triggered and which branch
-  pull_request:
   push:
-    branches:
-      -main
+    tags:
+      - 'v*'
 
 # Where it will be run
 jobs:
