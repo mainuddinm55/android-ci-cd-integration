@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v2.2.0
         with:
           name: Release artifact
-          path: app/release/*_${{ github.ref }}.apk
+          path: app/release/*.apk
 
       - name: Create Release
         id: create_release
