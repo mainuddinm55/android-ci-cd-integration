@@ -23,6 +23,10 @@ jobs:
         with:
           java-version: 11.0.8
 
+      # Make gradle executable
+      - name: Make gradle executable
+        run: chmod +x ./gradlew
+
       # Build all our Build Types at once
       - name: Build all artifacts
         id: BuildAllAPKs
