@@ -27,7 +27,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Kotlin Linter
-      run: ./gradlew check
+        run: ./gradlew check
 
       # Build all our Build Types at once
       - name: Build all artifacts
