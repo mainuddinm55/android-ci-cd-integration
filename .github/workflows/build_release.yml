@@ -39,7 +39,7 @@ jobs:
           arguments: assembleRelease
 
       - name: Run Kotlin Linter
-        run: ./gradlew ktlintStagingDebugCheck
+        run: ./gradlew check
 
       # Sign our artifacts
       - name: Sign artifacts
