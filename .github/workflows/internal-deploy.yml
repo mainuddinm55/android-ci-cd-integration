@@ -24,12 +24,12 @@ jobs:
       - name: Build
         id: gradle
         uses: eskatos/gradle-command-action@v1.3.3
-          with:
-            gradle-version: current
-            distributions-cache-enabled: true
-            dependencies-cache-enabled: true
-            configuration-cache-enabled: true
-            arguments: assembleRelease
+        with:
+          gradle-version: current
+          distributions-cache-enabled: true
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
+          arguments: assembleRelease
 
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
