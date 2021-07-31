@@ -33,13 +33,19 @@ jobs:
       - name: Set output
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
 
       - name: Create Release
         id: create_release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.TOKEN_GITHUB }}"
-          automatic_release_tag: "Release ${{ steps.vars.outputs.tag }}"
+          automatic_release_tag: "Release $RELEASE_VERSION"
           prerelease: true
           files: |
             *.aab
