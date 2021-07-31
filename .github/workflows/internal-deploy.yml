@@ -31,7 +31,8 @@ jobs:
           arguments: assembleRelease
 
       - name: Print Ref
-        run: echo "${{ github.ref }}"
+        run: echo "${{ github.ref }} ${{ steps.vars.outputs }}"
+
       - name: Create Release
         id: create_release
         uses: zendesk/action-create-release@v1
