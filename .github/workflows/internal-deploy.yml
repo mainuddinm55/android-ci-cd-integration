@@ -36,15 +36,11 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: zendesk/action-create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          tag_name: ${{ steps.vars.outputs.tag }}
-          release_name: Release ${{ steps.vars.outputs.tag }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+          repo_token: "${{ secrets.TOKEN_GITHUB }}"
+          automatic_release_tag: "Release ${{ steps.vars.outputs.tag }}"
+          prerelease: true
+          files: |
+            *.aab
+            *.apk
