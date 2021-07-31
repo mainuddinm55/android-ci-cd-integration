@@ -33,12 +33,6 @@ jobs:
       - name: Set output
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-      - name: Check output
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-        run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
 
       - name: Create Release
         id: create_release
@@ -46,8 +40,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.vars.outputs.tag }}
+          release_name: Release ${{ steps.vars.outputs.tag }}
           body: |
             Changes in this Release
             - First Change
