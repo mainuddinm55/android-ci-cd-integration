@@ -33,11 +33,16 @@ jobs:
       - name: Print Ref
         run: echo "${{ github.ref }}"
       - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        id: create_release
+        uses: zendesk/action-create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          repo_token: "${{ secrets.TOKEN_GITHUB }}"
-          automatic_release_tag: "Release latest"
-          prerelease: true
-          files: |
-            *.aab
-            *.apk
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
