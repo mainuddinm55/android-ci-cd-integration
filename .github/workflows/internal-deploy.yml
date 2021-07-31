@@ -33,7 +33,7 @@ jobs:
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo-token: "${{ secrets.TOKEN_GITHUB }}"
+          repo_token: "${{ secrets.TOKEN_GITHUB }}"
           prerelease: true
           files: |
             *.aab
