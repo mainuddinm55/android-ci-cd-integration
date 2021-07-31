@@ -34,6 +34,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.TOKEN_GITHUB }}"
+          automatic_release_tag: "Release ${{ github.ref }}"
           prerelease: true
           files: |
             *.aab
