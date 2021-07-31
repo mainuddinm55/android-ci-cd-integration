@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-    if: github.action == github.repository_owner
     runs-on: ubuntu-latest
 
     steps:
