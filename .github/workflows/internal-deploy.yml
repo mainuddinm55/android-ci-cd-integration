@@ -1,0 +1,44 @@
+name: Internal Deploy
+on:
+  push:
+    tags:
+      - 'v*-internal'
+
+jobs:
+  deploy:
+    if: github.action == github.repository_owner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup JDK
+        uses: actions/setup@v1
+        with:
+          java-version: 11.0.8
+
+      - name: Permission Granted fo Gradle
+        run: chmod +x ./gradlew
+
+      - name: Restore Gradle Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hasFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build
+        run: sudo ./gradlew :app:bundleRelease --stacktrace
+
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo-token: "${{ secrets.TOKEN_GITHUB }}"
+          prerelease: true
+          files: |
+            *.aab
+            *.apk
