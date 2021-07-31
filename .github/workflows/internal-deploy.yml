@@ -5,7 +5,7 @@ on:
       - 'v*-internal'
 
 jobs:
-  deploy:
+  build:
     if: github.action == github.repository_owner
     runs-on: ubuntu-latest
 
