@@ -30,12 +30,14 @@ jobs:
           configuration-cache-enabled: true
           arguments: assembleRelease
 
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.TOKEN_GITHUB }}"
-          automatic_release_tag: "Release ${{ github.ref }}"
-          prerelease: true
-          files: |
-            *.aab
-            *.apk
+        # Create Release
+        - name: Create Release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          with:
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
+            draft: false
+            prerelease: false
