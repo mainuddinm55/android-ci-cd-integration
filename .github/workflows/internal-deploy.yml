@@ -21,18 +21,15 @@ jobs:
       - name: Permission Granted fo Gradle
         run: chmod +x ./gradlew
 
-      - name: Restore Gradle Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hasFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Build
-        run: sudo ./gradlew :app:bundleRelease --stacktrace
+        id: gradle
+        uses: eskatos/gradle-command-action@v1.3.3
+          with:
+            gradle-version: current
+            distributions-cache-enabled: true
+            dependencies-cache-enabled: true
+            configuration-cache-enabled: true
+            arguments: assembleRelease
 
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
