@@ -16,6 +16,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Gradle Permission
+        run: chmod +x build.gradle
       - name: Build Gradle
         id: buildGradle
         run: ./gradlew build
