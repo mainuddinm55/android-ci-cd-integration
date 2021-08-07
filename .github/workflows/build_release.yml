@@ -5,7 +5,7 @@ on:
   # When it will be triggered and which branch
   push:
     branches:
-      - master
+      - main
 
 # Where it will be run
 jobs:
