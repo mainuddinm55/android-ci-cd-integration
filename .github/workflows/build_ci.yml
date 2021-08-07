@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app_release_apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/apk/release/*.apk
 
       - name: Create Release
         uses: kyze8439690/action-release-releaseapk@master
