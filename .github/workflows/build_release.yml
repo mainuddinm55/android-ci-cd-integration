@@ -52,8 +52,8 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       -name: Show signed apk
-        run:
-          echo ${{steps.sign_app.outputs.signedReleaseFile}}
+       run:
+         echo "${{steps.sign_app.outputs.signedReleaseFile}}"
       # Upload APK
       - name: Upload APK
         uses: actions/upload-artifact@v2
