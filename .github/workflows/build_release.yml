@@ -51,8 +51,8 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      -name: Show signed apk
-       run:
+      - name: Show signed apk
+        run: |
          echo "${{steps.sign_app.outputs.signedReleaseFile}}"
       # Upload APK
       - name: Upload APK
