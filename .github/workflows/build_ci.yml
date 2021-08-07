@@ -1,0 +1,41 @@
+name: Build CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+      - name: Setup JDK
+        id: setup_jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build Gradle
+        id: buildGradle
+        run: ./gradlew build
+      - name: Build AAB
+        id: buildRelease
+        run: ./gradle bundleRelease
+      - name: Sign AAB
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.KEYSTORE }}
+          alias: ${{ secrets.KEYALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Upload AAB
+        id: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: app/build/outputs/bundle/release/app-release.aab
+
+
