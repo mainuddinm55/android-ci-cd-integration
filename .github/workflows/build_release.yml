@@ -4,8 +4,8 @@ name: Release Build
 on:
   # When it will be triggered and which branch
   push:
-    tags:
-      - 'v'
+    branches:
+      - master
 
 # Where it will be run
 jobs:
@@ -30,15 +30,8 @@ jobs:
         run: ./gradlew check
 
       # Build all our Build Types at once
-      - name: Build Gradle
-        id: gradle
-        uses: eskatos/gradle-command-action@v1.3.3
-        with:
-          gradle-version: current
-          distributions-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-          arguments: assembleRelease
+      - name: Build APK
+        run: ./gradlew assembleRelease --stacktrace
 
       # Sign our artifacts
       - name: Signed APK
@@ -55,38 +48,38 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2.2.0
         with:
-          name: Release artifact
-          path: app/release/*.apk
+          name: App
+          path: app/build/outputs/apk/release/*.apk
 
       # Create Release
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      # Save name for release
-      - name: Save name of Relase
-        id: set-result-artifact
-        run: |
-          RELEASE_PATHNAME_APK=$(ls app/release/*.apk | head -n 1)
-          RELEASE_NAME_APK=$(basename $RELEASE_PATHNAME_APK)
-          echo "RELEASE_NAME_APK is " ${RELEASE_NAME_APK}
-          echo "RELEASE_PATHNAME_APK=${RELEASE_PATHNAME_APK}" >> $GITHUB_ENV
-          echo "RELEASE_NAME_APK=${RELEASE_NAME_APK}" >> $GITHUB_ENV
-
-      - name: Upload Release Assets
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.RELEASE_PATHNAME_APK }}
-          asset_name: ${{ env.RELEASE_NAME_APK }}
-          asset_content_type: application/zip
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: Release ${{ github.ref }}
+#          draft: false
+#          prerelease: false
+#
+#       Save name for release
+#      - name: Save name of Relase
+#        id: set-result-artifact
+#        run: |
+#          RELEASE_PATHNAME_APK=$(ls app/release/*.apk | head -n 1)
+#          RELEASE_NAME_APK=$(basename $RELEASE_PATHNAME_APK)
+#          echo "RELEASE_NAME_APK is " ${RELEASE_NAME_APK}
+#          echo "RELEASE_PATHNAME_APK=${RELEASE_PATHNAME_APK}" >> $GITHUB_ENV
+#          echo "RELEASE_NAME_APK=${RELEASE_NAME_APK}" >> $GITHUB_ENV
+#
+#      - name: Upload Release Assets
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: ${{ env.RELEASE_PATHNAME_APK }}
+#          asset_name: ${{ env.RELEASE_NAME_APK }}
+#          asset_content_type: application/zip
