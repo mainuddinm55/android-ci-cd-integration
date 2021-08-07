@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v2.2.0
         with:
           name: App
-          path: app/build/outputs/apk/release/*.apk
+          path: ${{steps.sign.outputs.signedReleaseFile}}
 
       # Create Release
       - name: Create Release
@@ -74,7 +74,7 @@ jobs:
           echo "RELEASE_NAME_APK=${RELEASE_NAME_APK}" >> $GITHUB_ENV
 
       - name: Upload Release Assets
-        id: upload-release-asset
+        id: upload_release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
