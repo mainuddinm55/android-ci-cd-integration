@@ -31,7 +31,14 @@ jobs:
 
       # Build all our Build Types at once
       - name: Build APK
-        run: ./gradlew assembleRelease --stacktrace
+        id: build_apk
+        uses: eskatos/gradle-command-action@v1.3.3
+        with:
+          gradle-version: current
+          distributions-cache-enabled: true
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
+          arguments: assembleRelease
 
       # Sign our artifacts
       - name: Signed APK
@@ -46,7 +53,7 @@ jobs:
 
       # Upload APK
       - name: Upload APK
-        uses: actions/upload-artifact@v2.2.0
+        uses: actions/upload-artifact@v2
         with:
           name: App
           path: ${{steps.sign.outputs.signedReleaseFile}}
