@@ -46,30 +46,6 @@ jobs:
           name: app
           path: app/build/outputs/bundle/release/app-release.aab
 
-      - name: Build APK
-        run: ./gradlew assembleRelease
-
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEYSTORE }}
-          alias: ${{ secrets.KEYALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v1
-        with:
-          name: app_release_apk
-          path: app/build/outputs/apk/release/*.apk
-
-      - name: Create Release
-        uses: kyze8439690/action-release-releaseapk@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-          APP_FOLDER: app
-
 #      - name: Upload to Firebase Distribution
 #        uses: wzieba/Firebase-Distribution-Github-Action@v1
 #        with:
