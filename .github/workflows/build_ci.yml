@@ -17,7 +17,7 @@ jobs:
         with:
           java-version: 11
       - name: Gradle Permission
-        run: chmod +x build.gradle
+        run: chmod +x ./gradlew
       - name: Build Gradle
         id: buildGradle
         run: ./gradlew build
